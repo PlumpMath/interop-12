@@ -38,6 +38,12 @@ def targets(args,client):
         for target in targets.result():
             pprint.pprint(target.serialize())
 
+#Added 19 APR
+def obstacles(args,client):
+    obstacles = client.get_obstacles()
+    for o in obstacles.result():
+        pprint.pprint(o)
+
 
 def probe(args, client):
     while True:
@@ -84,6 +90,17 @@ def main():
 
     subparser = subparsers.add_parser('missions',help='Get Missions.')
     subparser.set_defaults(func=missions)
+
+    #19 APR added obstacles subparser element
+    subparser = subparsers.add_parser(
+        'obstacles',
+        help='Get Stationary and Moving obstacles.',
+        description='''Download targest from the interoperability server.
+        This tool searches for any obstacles from the interop server and
+        returns them.
+        ''',
+        formatter_class=argparse.RawDescriptionHelpFormatter)
+    subparser.set_defaults(func=obstacles)
 
     subparser = subparsers.add_parser(
         'targets',
